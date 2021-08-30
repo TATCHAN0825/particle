@@ -53,13 +53,14 @@ class ParticleCommand extends PluginCommand implements CommandExecutor
             return true;
         }
         if (array_key_exists($sender->getName(), $this->particleTaskHandlers)) {
+            $this->particleTaskHandlers[$sender->getName()]->cancel();
             unset($this->particleTaskHandlers[$sender->getName()]);
             $sender->sendMessage(TextFormat::RED . "offにしました");
             return true;
         } else {
             $color = 0;
             $handler = $this->getPlugin()->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (int $tick) use ($sender, &$handler, &$color): void {
-                if (!$sender->isOnline() || !array_key_exists($sender->getName(), $this->particleTaskHandlers)) {
+                if (!$sender->isOnline()) {
                     $handler->cancel();
                     return;
                 }
