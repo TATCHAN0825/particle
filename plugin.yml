@@ -1,0 +1,6 @@
+---
+name: particle
+version: 0.0.1
+main: tatchan\particle\Main
+api: 3.22.0
+...
